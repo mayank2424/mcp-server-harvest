@@ -3,6 +3,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { HarvestClientWrapper } from '../src/harvest-client';
 import { ClientTool } from "./tools/clients";
+import { CompanyTool } from "./tools/company";
 
 const harvestAccountId = process.env.HARVEST_ACCOUNT_ID;
 const harvestAccessToken = process.env.HARVEST_ACCESS_TOKEN;
@@ -33,6 +34,7 @@ const client = new HarvestClientWrapper({
 
 // Init the tools
 new ClientTool(client, server).register();
+new CompanyTool(client, server).register();
 
 async function main() {
     try {

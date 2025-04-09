@@ -71,4 +71,13 @@ export class HarvestClientWrapper {
         return { clients, total }
     }
 
+    async getClient(clientId: number) {
+        const response = await this.client.get(`/clients/${clientId}`);
+        const client: HarvestClient = response?.data;
+
+        if(!client) return null;
+
+        return client;
+    }
+
 }

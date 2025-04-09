@@ -38,6 +38,18 @@ export class ClientTool extends BaseTool {
                 return this.searchClients({ name, isActive });
             }
         )
+
+        // get-client tool
+        this.server.tool(
+            'get-client',
+            "Get a client by ID",
+            {
+                clientId: z.string().describe("ID of the client to get"),
+            },
+            async ({ clientId }) => {
+                return this.getClient(clientId);
+            }
+        )
     }
 
     /**
@@ -71,6 +83,17 @@ export class ClientTool extends BaseTool {
         return this.toResult(
             `Result: ${total} clients found: 
             ${formatClientsList(clients)}
+        `);
+    }
+
+    async getClient(clientId: string): Promise<CallToolResult> {
+        const client = await this.client.getClient(Number(clientId));
+        if(!client) {
+            return this.toResult(`Result: No client found with this ID ${clientId}`);
+        }
+
+        return this.toResult(
+            `ID: ${client.id}\n**Name**: ${client.name}\n**Is Active**: ${client.is_active}\n**Currency**: ${client.currency || "N/A"}
         `);
     }
 }
