@@ -1,4 +1,4 @@
-import type { HarvestClient, HarvestProject, HarvestUser } from "@/harvest-client/types/response";
+import type { HarvestClient, HarvestProject, HarvestTaskAssignment, HarvestUser, HarvestUserAssignment } from "@/harvest-client/types/response";
 
 export const formatListToLLMResponse = (list: string[]) => {
     return list.map((item) => `- ${item}`).join("\n");
@@ -38,4 +38,26 @@ export const formatUsersList = (users: HarvestUser[]) => {
     `);
 
     return formatListToLLMResponse(formattedUsersList);
+}
+
+export const formatProjectUserAssignmentsList = (userAssignments: HarvestUserAssignment[]) => {
+    const formattedUsersList = userAssignments.map((userAssignment) => `
+        **ID**: ${userAssignment.id}
+        **User Name**: ${userAssignment?.user?.name}
+        **Is Active**: ${userAssignment.is_active}
+        **Project Name**: ${userAssignment?.project?.name || "N/A"}
+    `);
+
+    return formatListToLLMResponse(formattedUsersList);
+}
+
+export const formatProjectTaskAssignmentsList = (taskAssignments: HarvestTaskAssignment[]) => {
+    const formattedTasksList = taskAssignments.map((taskAssignment) => `
+        **ID**: ${taskAssignment.id}
+        **Task Name**: ${taskAssignment?.task?.name || "N/A"}
+        **Is Active**: ${taskAssignment.is_active}
+        **Project Name**: ${taskAssignment?.project?.name || "N/A"}
+    `);
+
+    return formatListToLLMResponse(formattedTasksList);
 }

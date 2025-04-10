@@ -1,5 +1,5 @@
 import axios, { AxiosError, type AxiosInstance } from 'axios';
-import type { HarvestClient, HarvestCompany, HarvestProject, HarvestUser } from './types/response';
+import type { HarvestClient, HarvestCompany, HarvestProject, HarvestTaskAssignment, HarvestUser, HarvestUserAssignment } from './types/response';
 import type { SearchClientInputs, SearchProjectInputs } from './types/request';
 
 interface HarvestClientOptions {
@@ -119,4 +119,21 @@ export class HarvestClientWrapper {
         return user;
     }
 
+    async listProjectUserAssignments(projectId: number) {
+        const response = await this.client.get(`/projects/${projectId}/user_assignments`);
+
+        const userAssignments: HarvestUserAssignment[] = response?.data?.user_assignments || [];
+        const total = response?.data?.total_entries;
+
+        return { userAssignments, total }
+    }
+
+    async listProjectTaskAssignments(projectId: number) {
+        const response = await this.client.get(`/projects/${projectId}/task_assignments`);
+
+        const taskAssignments: HarvestTaskAssignment[] = response?.data?.task_assignments || [];
+        const total = response?.data?.total_entries;
+
+        return { taskAssignments, total }
+    }
 }

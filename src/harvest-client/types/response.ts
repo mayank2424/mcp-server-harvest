@@ -154,7 +154,10 @@ export interface HarvestUserAssignment {
     hourly_rate: number | null;
     budget: number | null;
     project: HarvestProject;
-    user: HarvestUser;
+    user: {
+        id: number;
+        name: string;
+    };
 }
 
 // Time Entries

@@ -87,6 +87,14 @@ A TypeScript based MCP (Model Context Protocol) server for Harvest time tracking
     - Inputs:
       - userId: string - The ID of the user to retrieve.
     - Output: Returns detailed information about the specified user.
+8. `list-project-users` - List all project user assignments
+    - Inputs:
+      - projectId: string - The ID of the project to retrieve users for.
+    - Output: Returns a list of users assigned to the specified project.
+9. `list-project-tasks` - List all project task assignments
+    - Inputs:
+      - projectId: string - The ID of the project to retrieve tasks for.
+    - Output: Returns a list of tasks assigned to the specified project.
 _**Note: More tools coming soon.**_
 
 ## Local Installation And Development
