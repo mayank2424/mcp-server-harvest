@@ -5,17 +5,18 @@ import { HarvestClientWrapper } from '../src/harvest-client';
 import { ClientTool } from "./tools/clients";
 import { CompanyTool } from "./tools/company";
 import { ProjectTool } from "./tools/projects";
+import { UserTool } from "./tools/users";
 
 const harvestAccountId = process.env.HARVEST_ACCOUNT_ID;
 const harvestAccessToken = process.env.HARVEST_ACCESS_TOKEN;
 const harvestBaseURL = process.env.HARVEST_BASE_URL || "https://api.harvestapp.com/v2";
 
 if (!harvestAccessToken) {
-	console.error("HARVEST_ACCESS_TOKEN is required");
-	process.exit(1);
+    console.error("HARVEST_ACCESS_TOKEN is required");
+    process.exit(1);
 }
 
-if(!harvestAccountId) {
+if (!harvestAccountId) {
     console.error("HARVEST_ACCOUNT_ID is required");
     process.exit(1);
 }
@@ -37,14 +38,15 @@ const client = new HarvestClientWrapper({
 new ClientTool(client, server).register();
 new CompanyTool(client, server).register();
 new ProjectTool(client, server).register();
+new UserTool(client, server).register();
 
 async function main() {
     try {
         const transport = new StdioServerTransport();
-		await server.connect(transport);
-    } catch(error) {
+        await server.connect(transport);
+    } catch (error) {
         console.error("[Server Fatal Error]:", error);
-        process.exit(1);    
+        process.exit(1);
     }
 }
 

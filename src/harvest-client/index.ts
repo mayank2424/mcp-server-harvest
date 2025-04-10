@@ -1,5 +1,5 @@
 import axios, { AxiosError, type AxiosInstance } from 'axios';
-import type { HarvestClient, HarvestCompany, HarvestProject } from './types/response';
+import type { HarvestClient, HarvestCompany, HarvestProject, HarvestUser } from './types/response';
 import type { SearchClientInputs, SearchProjectInputs } from './types/request';
 
 interface HarvestClientOptions {
@@ -102,6 +102,21 @@ export class HarvestClientWrapper {
         return project;
     }
 
+    async listUsers() {
+        const response = await this.client.get('/users');
+        const users: HarvestUser[] = response?.data?.users || [];
+        const total = response?.data?.total_entries;
 
+        return { users, total }
+    }
+
+    async getUser(userId: number) {
+        const response = await this.client.get(`/users/${userId}`);
+        const user: HarvestUser = response?.data;
+
+        if (!user) return null;
+
+        return user;
+    }
 
 }
