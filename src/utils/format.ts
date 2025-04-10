@@ -1,4 +1,4 @@
-import type { HarvestClient } from "@/harvest-client/types";
+import type { HarvestClient, HarvestProject } from "@/harvest-client/types/response";
 
 export const formatListToLLMResponse = (list: string[]) => {
     return list.map((item) => `- ${item}`).join("\n");
@@ -13,4 +13,16 @@ export const formatClientsList = (clients: HarvestClient[]) => {
     `);
 
     return formatListToLLMResponse(formattedClientsList);
+}
+
+export const formatProjectsList = (projects: HarvestProject[]) => {
+    const formattedProjectsList = projects.map((project) => `
+        **ID**: ${project.id}
+        **Name**: ${project.name}
+        **Is Active**: ${project.is_active}
+        **Is Billable**: ${project.is_billable}
+        **Hourly Rate**: ${project.hourly_rate || "N/A"}
+    `);
+
+    return formatListToLLMResponse(formattedProjectsList);
 }

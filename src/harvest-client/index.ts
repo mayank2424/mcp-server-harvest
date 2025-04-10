@@ -1,5 +1,6 @@
 import axios, { AxiosError, type AxiosInstance } from 'axios';
-import type { HarvestClient, HarvestCompany } from './types';
+import type { HarvestClient, HarvestCompany, HarvestProject } from './types/response';
+import type { SearchClientInputs, SearchProjectInputs } from './types/request';
 
 interface HarvestClientOptions {
     baseURL?: string;
@@ -51,13 +52,9 @@ export class HarvestClientWrapper {
         return company;
     }
 
-    async searchClients({
-        name,
-        isActive,
-    }: {
-        name?: string;
-        isActive?: boolean;
-    }) {
+    async searchClients(searchInputs: SearchClientInputs) {
+        const { name, isActive } = searchInputs;
+
         const response = await this.client.get('/clients', {
             params: {
                 name: name || undefined,
@@ -75,9 +72,36 @@ export class HarvestClientWrapper {
         const response = await this.client.get(`/clients/${clientId}`);
         const client: HarvestClient = response?.data;
 
-        if(!client) return null;
+        if (!client) return null;
 
         return client;
     }
+
+    async searchProjects(searchInputs: SearchProjectInputs) {
+        const { clientId, name, isActive } = searchInputs;
+
+        const response = await this.client.get('/projects', {
+            params: {
+                client_id: clientId || undefined,
+                name: name || undefined,
+                is_active: isActive || undefined,
+            }
+        });
+        const projects: HarvestProject[] = response?.data?.projects || [];
+        const total = response?.data?.total_entries;
+
+        return { projects, total }
+    }
+
+    async getProject(projectId: number) {
+        const response = await this.client.get(`/projects/${projectId}`);
+        const project: HarvestProject = response?.data;
+
+        if (!project) return null;
+
+        return project;
+    }
+
+
 
 }
