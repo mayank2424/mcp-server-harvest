@@ -13,7 +13,7 @@ A TypeScript based MCP (Model Context Protocol) server for Harvest time tracking
 ### Claude Desktop
 - Open the Claude desktop config file `claude-desktop-config.json` and set the following details under `mcpServers`.
 
-  ```json 
+  ```jsonc
   {
     "mcpServers": {
       "Harvest": {
@@ -36,7 +36,7 @@ A TypeScript based MCP (Model Context Protocol) server for Harvest time tracking
 ### Cursor IDE
 - Open the Cursor IDE config file `~/.cursor/mcp.json` or `<project-root>/.cursor/mcp.json` and set the following details under `mcpServers`.
 
-  ```json
+  ```jsonc
   {
     "mcpServers": {
       "Harvest": {
@@ -104,7 +104,7 @@ This will create a `dist` directory containing the compiled JavaScript files.
    ```
 
    Modify the MCP server configuration file in any of the clients (Claude, Cursor)
-   ```json
+   ```jsonc
     {
       "mcpServers": {
         "Harvest": {
