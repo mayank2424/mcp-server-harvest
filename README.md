@@ -80,7 +80,13 @@ A TypeScript based MCP (Model Context Protocol) server for Harvest time tracking
     - Inputs:
       - projectId: string - The ID of the project to retrieve.
     - Output: Returns detailed information about the specified project.
-
+6. `list-users` - Lists all users in the Harvest account
+    - Inputs: None
+    - Output: Returns a list of users with IDs and other details.
+7. `get-user` - Get user information
+    - Inputs:
+      - userId: string - The ID of the user to retrieve.
+    - Output: Returns detailed information about the specified user.
 _**Note: More tools coming soon.**_
 
 ## Local Installation And Development
