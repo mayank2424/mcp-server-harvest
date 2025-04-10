@@ -25,7 +25,7 @@ A TypeScript based MCP (Model Context Protocol) server for Harvest time tracking
         ],
         "env": {
           "HARVEST_ACCOUNT_ID": "<Harvest Account ID>",
-          "HARVEST_ACCESS_TOKEN": "<Harvest Personal Access Token>"
+          "HARVEST_ACCESS_TOKEN": "<Harvest Personal Access Token>",
           "HARVEST_BASE_URL": "<Harvest Base URL>"
         }
       }
@@ -48,7 +48,7 @@ A TypeScript based MCP (Model Context Protocol) server for Harvest time tracking
         ],
         "env": {
           "HARVEST_ACCOUNT_ID": "<Harvest Account ID>",
-          "HARVEST_ACCESS_TOKEN": "<Harvest Personal Access Token>"
+          "HARVEST_ACCESS_TOKEN": "<Harvest Personal Access Token>",
           "HARVEST_BASE_URL": "<Harvest Base URL>"
         }
       }
@@ -114,7 +114,7 @@ This will create a `dist` directory containing the compiled JavaScript files.
           ],
           "env": {
             "HARVEST_ACCOUNT_ID": "<Harvest Account ID>",
-            "HARVEST_ACCESS_TOKEN": "<Harvest Personal Access Token>"
+            "HARVEST_ACCESS_TOKEN": "<Harvest Personal Access Token>",
             "HARVEST_BASE_URL": "<Harvest Base URL>"
           }
         }
