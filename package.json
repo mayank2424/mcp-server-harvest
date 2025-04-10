@@ -1,0 +1,29 @@
+{
+  "name": "mcp-server-harvest",
+  "description": "MCP (Model Context Protocol) server for Harvest Time Tracking.",
+  "module": "index.ts",
+  "version": "0.0.1",
+  "type": "module",
+  "devDependencies": {
+    "@eslint/js": "^9.24.0",
+    "@types/bun": "latest",
+    "eslint": "^9.24.0",
+    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-security": "^3.0.1",
+    "eslint-plugin-unicorn": "^58.0.0",
+    "typescript-eslint": "^8.29.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.9.0",
+    "axios": "^1.8.4",
+    "zod": "^3.24.2"
+  },
+  "scripts": {
+    "lint": "eslint",
+		"build": "bun build ./index.ts --outfile dist/index.js --target node",
+    "prebuild": "tsc --noEmit"
+  }
+}
