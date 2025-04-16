@@ -6,6 +6,7 @@ import { ClientTool } from "./tools/clients";
 import { CompanyTool } from "./tools/company";
 import { ProjectTool } from "./tools/projects";
 import { UserTool } from "./tools/users";
+import { TimEntryTool } from "./tools/time-entries";
 
 const harvestAccountId = process.env.HARVEST_ACCOUNT_ID;
 const harvestAccessToken = process.env.HARVEST_ACCESS_TOKEN;
@@ -39,6 +40,7 @@ new ClientTool(client, server).register();
 new CompanyTool(client, server).register();
 new ProjectTool(client, server).register();
 new UserTool(client, server).register();
+new TimEntryTool(client, server).register();
 
 async function main() {
     try {

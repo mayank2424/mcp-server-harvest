@@ -4,7 +4,7 @@ A TypeScript based MCP (Model Context Protocol) server for Harvest time tracking
 
 ## Prerequisites
 
-- Bun Runtime
+- [Bun Runtime](https://bun.sh/)
 - Harvest account with API access
 - API Personal Access Token from Harvest
 - Account ID from Harvest
@@ -12,45 +12,25 @@ A TypeScript based MCP (Model Context Protocol) server for Harvest time tracking
 _More details on how to create a Personal Access Token can be found in the [Harvest API documentation](https://help.getharvest.com/api-v2/authentication-api/authentication/authentication/#personal-access-tokens)._
 
 ## Tools
-1. `get-company` - Get company information
-    - Inputs: None
-    - Output: Returns Company Information(Name, URL, ID and Currency).
-2. `search-clients` -  Searches for clients in Harvest account
-    - Inputs:
-      - name: string (optional) - The name of the client to search for.
-      - isActive: boolean (optional) - Filter clients by their active status.
-    - Output: Returns a list of clients with IDs and other details.
-3. `get-client` - Get client information
-    - Inputs:
-      - clientId: string - The ID of the client to retrieve.
-    - Output: Returns detailed information about the specified client.
-4. `search-projects` - Searches for projects in Harvest account
-    - Inputs:
-      - name: string (optional) - The name of the project to search for.
-      - clientId: string (optional) - The ID of the client to filter projects by.
-      - isActive: boolean (optional) - Filter projects by their active status.
-    - Output: Returns a list of projects with IDs and other details.
-5. `get-project` - Get project information
-    - Inputs:
-      - projectId: string - The ID of the project to retrieve.
-    - Output: Returns detailed information about the specified project.
-6. `list-users` - Lists all users in the Harvest account
-    - Inputs: None
-    - Output: Returns a list of users with IDs and other details.
-7. `get-user` - Get user information
-    - Inputs:
-      - userId: string - The ID of the user to retrieve.
-    - Output: Returns detailed information about the specified user.
-8. `list-project-users` - List all project user assignments
-    - Inputs:
-      - projectId: string - The ID of the project to retrieve users for.
-    - Output: Returns a list of users assigned to the specified project.
-9. `list-project-tasks` - List all project task assignments
-    - Inputs:
-      - projectId: string - The ID of the project to retrieve tasks for.
-    - Output: Returns a list of tasks assigned to the specified project.
-_**Note: More tools coming soon.**_
 
+## Available Tools
+
+| Tool | Description | Inputs | Output |
+|------|-------------|---------|---------|
+| `get-company` | Get company information | None | Company Information (Name, URL, ID and Currency) |
+| `search-clients` | Searches for clients | • name: string (optional) - Client name<br>• isActive: boolean (optional) - Active status | List of clients with IDs and details |
+| `get-client` | Get client information | • clientId: string - Client ID | Detailed client information |
+| `search-projects` | Searches for projects | • name: string (optional) - Project name<br>• clientId: string (optional) - Client ID<br>• isActive: boolean (optional) - Active status | List of projects with IDs and details |
+| `get-project` | Get project information | • projectId: string - Project ID | Detailed project information |
+| `list-users` | Lists all users | None | List of users with IDs and details |
+| `get-user` | Get user information | • userId: string - User ID | Detailed user information |
+| `list-project-users` | List project user assignments | • projectId: string - Project ID | List of users assigned to project |
+| `list-project-tasks` | List project task assignments | • projectId: string - Project ID | List of tasks assigned to project |
+| `search-time-entries` | Searches for time entries | • from: string (optional) - Start date (YYYY-MM-DD)<br>• to: string (optional) - End date (YYYY-MM-DD)<br>• userId: string (optional) - User ID<br>• projectId: string (optional) - Project ID<br>• clientId: string (optional) - Client ID | List of time entries with details |
+| `get-time-entry` | Get time entry details | • timeEntryId: string - Time Entry ID | Detailed time entry information |
+| `create-time-entry` | Create a new time entry | • projectId: string - Project ID<br>• taskId: string - Task ID<br>• userId: string - User ID<br>• hours: number - Hours spent<br>• notes: string (optional) - Additional notes | Created time entry details |
+
+_**Note:** More tools coming soon._
 
 ## Usage
 ### Claude Desktop

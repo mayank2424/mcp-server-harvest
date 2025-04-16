@@ -14,3 +14,27 @@ export interface SearchProjectInputs {
     name?: string;
     isActive?: boolean;
 }
+
+/**
+ * Interface for the request body of the search time entry endpoint.
+ */
+export interface SearchTimeEntryInputs {
+    projectId?: number;
+    clientId?: number;
+    userId?: number;
+    taskId?: number;
+    fromDate?: string;
+    toDate?: string;
+}
+
+/**
+ * Interface for the request body of the create time entry endpoint.
+ */
+export interface CreateTimeEntryInputs {
+    projectId: number;
+    taskId: number;
+    userId: number;
+    date: string;
+    hours: number;
+    notes?: string;
+}

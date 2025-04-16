@@ -1,6 +1,6 @@
 import axios, { AxiosError, type AxiosInstance } from 'axios';
-import type { HarvestClient, HarvestCompany, HarvestProject, HarvestTaskAssignment, HarvestUser, HarvestUserAssignment } from './types/response';
-import type { SearchClientInputs, SearchProjectInputs } from './types/request';
+import type { HarvestClient, HarvestCompany, HarvestProject, HarvestTaskAssignment, HarvestTimeEntry, HarvestUser, HarvestUserAssignment } from './types/response';
+import type { CreateTimeEntryInputs, SearchClientInputs, SearchProjectInputs, SearchTimeEntryInputs } from './types/request';
 
 interface HarvestClientOptions {
     baseURL?: string;
@@ -45,14 +45,14 @@ export class HarvestClientWrapper {
         )
     }
 
-    async getCompanyInfo() {
+    async getCompanyInfo(): Promise<HarvestCompany> {
         const response = await this.client.get('/company');
         const company: HarvestCompany = response?.data;
 
         return company;
     }
 
-    async searchClients(searchInputs: SearchClientInputs) {
+    async searchClients(searchInputs: SearchClientInputs): Promise<{ clients: HarvestClient[]; total: number }> {
         const { name, isActive } = searchInputs;
 
         const response = await this.client.get('/clients', {
@@ -68,7 +68,7 @@ export class HarvestClientWrapper {
         return { clients, total }
     }
 
-    async getClient(clientId: number) {
+    async getClient(clientId: number): Promise<HarvestClient | null> {
         const response = await this.client.get(`/clients/${clientId}`);
         const client: HarvestClient = response?.data;
 
@@ -77,7 +77,7 @@ export class HarvestClientWrapper {
         return client;
     }
 
-    async searchProjects(searchInputs: SearchProjectInputs) {
+    async searchProjects(searchInputs: SearchProjectInputs): Promise<{ projects: HarvestProject[]; total: number }> {
         const { clientId, name, isActive } = searchInputs;
 
         const response = await this.client.get('/projects', {
@@ -93,7 +93,7 @@ export class HarvestClientWrapper {
         return { projects, total }
     }
 
-    async getProject(projectId: number) {
+    async getProject(projectId: number): Promise<HarvestProject | null> {
         const response = await this.client.get(`/projects/${projectId}`);
         const project: HarvestProject = response?.data;
 
@@ -102,7 +102,7 @@ export class HarvestClientWrapper {
         return project;
     }
 
-    async listUsers() {
+    async listUsers(): Promise<{ users: HarvestUser[]; total: number }> {
         const response = await this.client.get('/users');
         const users: HarvestUser[] = response?.data?.users || [];
         const total = response?.data?.total_entries;
@@ -110,7 +110,7 @@ export class HarvestClientWrapper {
         return { users, total }
     }
 
-    async getUser(userId: number) {
+    async getUser(userId: number): Promise<HarvestUser | null> {
         const response = await this.client.get(`/users/${userId}`);
         const user: HarvestUser = response?.data;
 
@@ -119,7 +119,7 @@ export class HarvestClientWrapper {
         return user;
     }
 
-    async listProjectUserAssignments(projectId: number) {
+    async listProjectUserAssignments(projectId: number): Promise<{ userAssignments: HarvestUserAssignment[]; total: number }> {
         const response = await this.client.get(`/projects/${projectId}/user_assignments`);
 
         const userAssignments: HarvestUserAssignment[] = response?.data?.user_assignments || [];
@@ -128,7 +128,7 @@ export class HarvestClientWrapper {
         return { userAssignments, total }
     }
 
-    async listProjectTaskAssignments(projectId: number) {
+    async listProjectTaskAssignments(projectId: number): Promise<{ taskAssignments: HarvestTaskAssignment[]; total: number }> {
         const response = await this.client.get(`/projects/${projectId}/task_assignments`);
 
         const taskAssignments: HarvestTaskAssignment[] = response?.data?.task_assignments || [];
@@ -136,4 +136,60 @@ export class HarvestClientWrapper {
 
         return { taskAssignments, total }
     }
+
+    async searchTimeEntries(searchInputs: SearchTimeEntryInputs): Promise<{ timeEntries: HarvestTimeEntry[]; total: number }> {
+        const { userId, projectId, clientId, taskId } = searchInputs;
+
+        const response = await this.client.get('/time_entries', {
+            params: {
+                user_id: userId || undefined,
+                project_id: projectId || undefined,
+                client_id: clientId || undefined,
+                task_id: taskId || undefined,
+            }
+        });
+
+        const timeEntries = response?.data?.time_entries || [];
+        const total = response?.data?.total_entries;
+
+        return { timeEntries, total }
+    }
+
+    async createTimeEntry(searchInputs: CreateTimeEntryInputs): Promise<HarvestTimeEntry | null> {
+        const { projectId, taskId, date, hours, userId, notes } = searchInputs;
+
+        const response = await this.client.post('/time_entries', {
+            project_id: projectId,
+            task_id: taskId,
+            user_id: userId || undefined,
+            spent_date: date,
+            hours: hours,
+            notes: notes || undefined,
+        });
+
+        const timeEntry: HarvestTimeEntry = response?.data;
+        if (!timeEntry) return null;
+
+        return timeEntry;
+    }
+
+    async getTask(taskId: number): Promise<HarvestTaskAssignment | null> {
+        const response = await this.client.get(`/tasks/${taskId}`);
+        const task: HarvestTaskAssignment = response?.data;
+
+        if (!task) return null;
+
+        return task;
+    }
+
+    async getTimeEntry(timeEntryId: number): Promise<HarvestTimeEntry | null> {
+        const response = await this.client.get(`/time_entries/${timeEntryId}`);
+        const timeEntry: HarvestTimeEntry = response?.data;
+
+        if (!timeEntry) return null;
+
+        return timeEntry;
+    }
+
+
 }

@@ -182,7 +182,10 @@ export interface HarvestTimeEntry {
     cost_rate: number;
     created_at: string;
     updated_at: string;
-    user: HarvestUser;
+    user: {
+        id: number;
+        name: string;
+    };
     client: HarvestClient;
     project: HarvestProject;
     task: HarvestTask;
