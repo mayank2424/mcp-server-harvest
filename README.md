@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/mayank2424-mcp-server-harvest-badge.png)](https://mseep.ai/app/mayank2424-mcp-server-harvest)
+
 # Harvest Time Tracking MCP Server
 
 A TypeScript based MCP (Model Context Protocol) server for Harvest time tracking app enabling LLM clients to interact with Harvest account.
