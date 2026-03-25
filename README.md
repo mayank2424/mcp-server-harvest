@@ -1,17 +1,23 @@
 # Harvest Time Tracking MCP Server
 
+[![npm version](https://img.shields.io/npm/v/@mayankg0324/mcp-server-harvest.svg)](https://www.npmjs.com/package/@mayankg0324/mcp-server-harvest)
+
 A TypeScript based MCP (Model Context Protocol) server for Harvest time tracking app enabling LLM clients to interact with Harvest account.
+
+## Installation
+
+```bash
+npx -y @mayankg0324/mcp-server-harvest
+```
 
 ## Prerequisites
 
-- [Bun Runtime](https://bun.sh/)
+- [Node.js](https://nodejs.org/) >= 18 (or [Bun Runtime](https://bun.sh/) for development)
 - Harvest account with API access
 - API Personal Access Token from Harvest
 - Account ID from Harvest
 
 _More details on how to create a Personal Access Token can be found in the [Harvest API documentation](https://help.getharvest.com/api-v2/authentication-api/authentication/authentication/#personal-access-tokens)._
-
-## Tools
 
 ## Available Tools
 
@@ -33,89 +39,127 @@ _More details on how to create a Personal Access Token can be found in the [Harv
 _**Note:** More tools coming soon._
 
 ## Usage
-### Claude Desktop
-- Open the Claude desktop config file `claude-desktop-config.json` and set the following details under `mcpServers`.
 
-  ```jsonc
-  {
-    "mcpServers": {
-      "Harvest": {
-        "command": "npx",
-        "args": [
-          "@harvest/mcp-server-typescript",
-          // Or use the path to the local build
-          // "path/to/local/build/dist/index.js"
-        ],
-        "env": {
-          "HARVEST_ACCOUNT_ID": "<Harvest Account ID>",
-          "HARVEST_ACCESS_TOKEN": "<Harvest Personal Access Token>",
-          "HARVEST_BASE_URL": "<Harvest Base URL>"
-        }
+### Claude Desktop
+
+Open the Claude desktop config file `claude-desktop-config.json` and add the following under `mcpServers`:
+
+```jsonc
+{
+  "mcpServers": {
+    "Harvest": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@mayankg0324/mcp-server-harvest"
+      ],
+      "env": {
+        "HARVEST_ACCOUNT_ID": "<Harvest Account ID>",
+        "HARVEST_ACCESS_TOKEN": "<Harvest Personal Access Token>",
+        "HARVEST_BASE_URL": "<Harvest Base URL>"
       }
     }
   }
-  ```
+}
+```
 
 ### Cursor IDE
-- Open the Cursor IDE config file `~/.cursor/mcp.json` or `<project-root>/.cursor/mcp.json` and set the following details under `mcpServers`.
 
-  ```jsonc
-  {
-    "mcpServers": {
-      "Harvest": {
-        "command": "npx",
-        "args": [
-          "@harvest/mcp-server-typescript",
-          // Or use the path to the local build
-          // "path/to/local/build/dist/index.js"
-        ],
-        "env": {
-          "HARVEST_ACCOUNT_ID": "<Harvest Account ID>",
-          "HARVEST_ACCESS_TOKEN": "<Harvest Personal Access Token>",
-          "HARVEST_BASE_URL": "<Harvest Base URL>"
-        }
+Open the Cursor IDE config file `~/.cursor/mcp.json` or `<project-root>/.cursor/mcp.json` and add the following under `mcpServers`:
+
+```jsonc
+{
+  "mcpServers": {
+    "Harvest": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@mayankg0324/mcp-server-harvest"
+      ],
+      "env": {
+        "HARVEST_ACCOUNT_ID": "<Harvest Account ID>",
+        "HARVEST_ACCESS_TOKEN": "<Harvest Personal Access Token>",
+        "HARVEST_BASE_URL": "<Harvest Base URL>"
       }
     }
   }
-  ```
+}
+```
 
+### Troubleshooting
 
-## Local Installation And Development
+#### `spawn npx ENOENT` or `env: node: No such file or directory`
+
+This happens when your MCP client (Claude Desktop, Cursor) cannot find `npx` or `node` in its PATH. GUI applications often don't inherit your shell's PATH, especially if you use a version manager like **nvm**, **fnm**, or **volta**.
+
+**Fix:** Use the full path to `npx` and include your Node bin directory in the `PATH` env variable:
+
+```bash
+# Find your npx and node paths
+which npx
+# e.g. /Users/you/.nvm/versions/node/v22.20.0/bin/npx
+```
+
+Then update your MCP config:
+
+```jsonc
+{
+  "mcpServers": {
+    "Harvest": {
+      "command": "/Users/you/.nvm/versions/node/v22.20.0/bin/npx",
+      "args": [
+        "-y",
+        "@mayankg0324/mcp-server-harvest"
+      ],
+      "env": {
+        "PATH": "/Users/you/.nvm/versions/node/v22.20.0/bin:/usr/bin:/bin",
+        "HARVEST_ACCOUNT_ID": "<Harvest Account ID>",
+        "HARVEST_ACCESS_TOKEN": "<Harvest Personal Access Token>",
+        "HARVEST_BASE_URL": "<Harvest Base URL>"
+      }
+    }
+  }
+}
+```
+
+## Local Development
 
 1. Install dependencies:
 
    ```bash
    npm install
    ```
+
 2. Build the project:
 
    ```bash
    npm run build
    ```
-This will create a `dist` directory containing the compiled JavaScript files.
 
-3. To use the local development version of MCP server instead of the published version, you can run the server directly from the local build:
+   This will create a `dist` directory containing the compiled JavaScript files.
 
-   ```bash
-   npm run build
-   ```
+3. To use the local development version, modify your MCP server config to point to the local build:
 
-   Modify the MCP server configuration file in any of the clients (Claude, Cursor)
    ```jsonc
-    {
-      "mcpServers": {
-        "Harvest": {
-          "command": "node",
-          "args": [
-            "path/to/local/build/dist/index.js"
-          ],
-          "env": {
-            "HARVEST_ACCOUNT_ID": "<Harvest Account ID>",
-            "HARVEST_ACCESS_TOKEN": "<Harvest Personal Access Token>",
-            "HARVEST_BASE_URL": "<Harvest Base URL>"
-          }
-        }
-      }
-    } 
+   {
+     "mcpServers": {
+       "Harvest": {
+         "command": "node",
+         "args": [
+           "path/to/local/build/dist/index.js"
+         ],
+         "env": {
+           "HARVEST_ACCOUNT_ID": "<Harvest Account ID>",
+           "HARVEST_ACCESS_TOKEN": "<Harvest Personal Access Token>",
+           "HARVEST_BASE_URL": "<Harvest Base URL>"
+         }
+       }
+     }
+   }
    ```
-4. Restart the client application (Claude, Cursor) to apply the changes and test the latest changes without publishing a new version.
+
+4. Restart the client application (Claude, Cursor) to apply the changes.
+
+## License
+
+MIT

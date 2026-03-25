@@ -1,9 +1,40 @@
 {
-  "name": "mcp-server-harvest",
+  "name": "@mayankg0324/mcp-server-harvest",
   "description": "MCP (Model Context Protocol) server for Harvest Time Tracking.",
-  "module": "index.ts",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "mcp-server-harvest": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "harvest",
+    "time-tracking",
+    "ai",
+    "llm",
+    "claude",
+    "cursor"
+  ],
+  "author": "mayank2424",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mayank2424/mcp-server-harvest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mayank2424/mcp-server-harvest/issues"
+  },
+  "homepage": "https://github.com/mayank2424/mcp-server-harvest#readme",
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
     "@types/bun": "latest",
@@ -23,7 +54,8 @@
   },
   "scripts": {
     "lint": "eslint",
-		"build": "bun build ./index.ts --outfile dist/index.js --target node",
-    "prebuild": "tsc --noEmit"
+    "build": "bun build ./index.ts --outfile dist/index.js --target node",
+    "prebuild": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
   }
 }
