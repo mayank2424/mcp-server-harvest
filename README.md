@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/mayank2424-mcp-server-harvest-badge.png)](https://mseep.ai/app/mayank2424-mcp-server-harvest)
+
 # Harvest Time Tracking MCP Server
 
 [![npm version](https://img.shields.io/npm/v/@mayankg0324/mcp-server-harvest.svg)](https://www.npmjs.com/package/@mayankg0324/mcp-server-harvest)
